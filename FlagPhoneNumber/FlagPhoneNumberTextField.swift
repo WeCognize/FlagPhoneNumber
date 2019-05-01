@@ -249,7 +249,14 @@ open class FPNTextField: UITextField, UITextFieldDelegate, FPNCountryPickerDeleg
 
 	@objc private func didEditText() {
 		if let phoneCode = selectedCountry?.phoneCode, let number = text {
-			var cleanedPhoneNumber = clean(string: "\(phoneCode) \(number)")
+            
+            var cleanedPhoneNumber: String
+            if number.starts(with: "+") {
+                cleanedPhoneNumber = clean(string: number)
+            }
+            else {
+                cleanedPhoneNumber = clean(string: "\(phoneCode) \(number)")
+            }
 
 			if let validPhoneNumber = getValidNumber(phoneNumber: cleanedPhoneNumber) {
 				nbPhoneNumber = validPhoneNumber
